@@ -1,7 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-const client = new Anthropic();
-
 const SYSTEM_PROMPT = `You are a LinkedIn writing expert. Transform the user's input into a polished LinkedIn message or post.
 
 Follow these rules:
@@ -23,6 +21,10 @@ export async function POST(req: Request) {
   }
 
   try {
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return Response.json({ error: "ANTHROPIC_API_KEY is not set in environment variables" }, { status: 500 });
+    }
+    const client = new Anthropic();
     const stream = await client.messages.stream({
       model: "claude-sonnet-4-6",
       max_tokens: 1024,
