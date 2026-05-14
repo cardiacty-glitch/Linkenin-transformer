@@ -10,6 +10,7 @@ Rules:
 - End with a question or call to action that invites engagement
 - No hashtags unless the input is clearly a public post
 - No filler like "I hope this finds you well" or "I wanted to reach out"
+- Never use em dashes (—). Use a comma, period, or rewrite the sentence instead
 - Match the emotional tone of the input — if it's raw, keep it real
 - Output only the finished LinkedIn message, nothing else`;
 
@@ -33,7 +34,8 @@ export async function POST(req: Request) {
       messages: [{ role: "user", content: text }],
     });
 
-    const result = message.content[0].type === "text" ? message.content[0].text : "";
+    const raw = message.content[0].type === "text" ? message.content[0].text : "";
+    const result = raw.replace(/—/g, ",");
     return Response.json({ result });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
