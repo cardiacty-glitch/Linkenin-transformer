@@ -24,8 +24,12 @@ export default function Home() {
       });
 
       if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error ?? "Something went wrong");
+        let message = `Request failed (${res.status})`;
+        try {
+          const data = await res.json();
+          if (data.error) message = data.error;
+        } catch {}
+        throw new Error(message);
       }
 
       const reader = res.body?.getReader();
