@@ -130,21 +130,33 @@ export default function Home() {
                 </button>
               )}
             </div>
-            <div
-              style={{
-                background: "#fff",
-                border: "1.5px solid #d1d5db",
-                borderRadius: 10,
-                padding: "16px 18px",
-                fontSize: 15,
-                lineHeight: 1.7,
-                color: "#111827",
-                minHeight: 120,
-                whiteSpace: "pre-wrap",
-              }}
-            >
-              {output || <span style={{ color: "#9ca3af" }}>Generating...</span>}
-            </div>
+            {loading && !output ? (
+              <div style={{ background: "#fff", border: "1.5px solid #d1d5db", borderRadius: 10, padding: "16px 18px", fontSize: 15, color: "#9ca3af", minHeight: 120 }}>
+                Generating...
+              </div>
+            ) : (
+              <textarea
+                value={output}
+                onChange={(e) => setOutput(e.target.value)}
+                rows={8}
+                style={{
+                  width: "100%",
+                  padding: "16px 18px",
+                  borderRadius: 10,
+                  border: "1.5px solid #d1d5db",
+                  fontSize: 15,
+                  lineHeight: 1.7,
+                  color: "#111827",
+                  background: "#fff",
+                  resize: "vertical",
+                  boxSizing: "border-box",
+                  outline: "none",
+                  fontFamily: "inherit",
+                }}
+                onFocus={(e) => (e.target.style.borderColor = "#2563eb")}
+                onBlur={(e) => (e.target.style.borderColor = "#d1d5db")}
+              />
+            )}
           </div>
         )}
       </div>
