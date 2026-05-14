@@ -23,26 +23,13 @@ export default function Home() {
         body: JSON.stringify({ text: input }),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        let message = `Request failed (${res.status})`;
-        try {
-          const data = await res.json();
-          if (data.error) message = data.error;
-        } catch {}
-        throw new Error(message);
+        throw new Error(data.error ?? `Request failed (${res.status})`);
       }
 
-      const reader = res.body?.getReader();
-      const decoder = new TextDecoder();
-      if (!reader) throw new Error("No response body");
-
-      let result = "";
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        result += decoder.decode(value, { stream: true });
-        setOutput(result);
-      }
+      setOutput(data.result ?? "");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {

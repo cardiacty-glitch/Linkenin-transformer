@@ -20,36 +20,21 @@ export async function POST(req: Request) {
     return Response.json({ error: "No text provided" }, { status: 400 });
   }
 
+  if (!process.env.ANTHROPIC_API_KEY) {
+    return Response.json({ error: "ANTHROPIC_API_KEY is not configured" }, { status: 500 });
+  }
+
   try {
-    if (!process.env.ANTHROPIC_API_KEY) {
-      return Response.json({ error: "ANTHROPIC_API_KEY is not set in environment variables" }, { status: 500 });
-    }
     const client = new Anthropic();
-    const stream = await client.messages.stream({
+    const message = await client.messages.create({
       model: "claude-sonnet-4-6",
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
       messages: [{ role: "user", content: text }],
     });
 
-    const encoder = new TextEncoder();
-    const readable = new ReadableStream({
-      async start(controller) {
-        for await (const chunk of stream) {
-          if (
-            chunk.type === "content_block_delta" &&
-            chunk.delta.type === "text_delta"
-          ) {
-            controller.enqueue(encoder.encode(chunk.delta.text));
-          }
-        }
-        controller.close();
-      },
-    });
-
-    return new Response(readable, {
-      headers: { "Content-Type": "text/plain; charset=utf-8" },
-    });
+    const result = message.content[0].type === "text" ? message.content[0].text : "";
+    return Response.json({ result });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     return Response.json({ error: message }, { status: 500 });
