@@ -45,6 +45,106 @@ export default function Home() {
 
   return (
     <main style={{ maxWidth: 760, margin: "0 auto", padding: "48px 24px" }}>
+      <style>{`
+        .lg-btn {
+          position: relative;
+          background: linear-gradient(160deg, rgba(96,165,250,0.72) 0%, rgba(37,99,235,0.62) 100%);
+          backdrop-filter: blur(20px) saturate(180%);
+          -webkit-backdrop-filter: blur(20px) saturate(180%);
+          color: #fff;
+          border: 1px solid rgba(255,255,255,0.48);
+          border-radius: 14px;
+          padding: 12px 28px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          align-self: flex-start;
+          box-shadow:
+            0 8px 24px rgba(37,99,235,0.22),
+            inset 0 1px 0 rgba(255,255,255,0.55),
+            inset 0 -1px 0 rgba(0,0,0,0.12);
+          transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+          overflow: hidden;
+          font-family: inherit;
+        }
+        .lg-btn::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0;
+          height: 52%;
+          background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0) 100%);
+          border-radius: 14px 14px 60% 60%;
+          pointer-events: none;
+        }
+        .lg-btn:hover:not(:disabled) {
+          background: linear-gradient(160deg, rgba(96,165,250,0.88) 0%, rgba(37,99,235,0.78) 100%);
+          box-shadow:
+            0 12px 32px rgba(37,99,235,0.32),
+            inset 0 1px 0 rgba(255,255,255,0.65),
+            inset 0 -1px 0 rgba(0,0,0,0.12);
+          transform: translateY(-1px);
+        }
+        .lg-btn:active:not(:disabled) {
+          transform: translateY(0);
+          box-shadow:
+            0 4px 12px rgba(37,99,235,0.18),
+            inset 0 1px 0 rgba(255,255,255,0.4),
+            inset 0 2px 5px rgba(0,0,0,0.12);
+        }
+        .lg-btn:disabled {
+          background: linear-gradient(160deg, rgba(147,197,253,0.5) 0%, rgba(147,197,253,0.4) 100%);
+          cursor: not-allowed;
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+          transform: none;
+        }
+
+        .lg-btn-copy {
+          position: relative;
+          backdrop-filter: blur(16px) saturate(160%);
+          -webkit-backdrop-filter: blur(16px) saturate(160%);
+          border-radius: 9px;
+          padding: 6px 14px;
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          overflow: hidden;
+          transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+          font-family: inherit;
+        }
+        .lg-btn-copy::before {
+          content: '';
+          position: absolute;
+          top: 0; left: 0; right: 0;
+          height: 50%;
+          background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 100%);
+          border-radius: 9px 9px 60% 60%;
+          pointer-events: none;
+        }
+        .lg-btn-copy-default {
+          background: rgba(255,255,255,0.52);
+          color: #374151;
+          border: 1px solid rgba(255,255,255,0.72);
+          box-shadow:
+            0 4px 12px rgba(0,0,0,0.07),
+            inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+        .lg-btn-copy-default:hover {
+          background: rgba(255,255,255,0.72);
+          box-shadow:
+            0 6px 18px rgba(0,0,0,0.1),
+            inset 0 1px 0 rgba(255,255,255,0.9);
+          transform: translateY(-1px);
+        }
+        .lg-btn-copy-copied {
+          background: rgba(209,250,229,0.65);
+          color: #065f46;
+          border: 1px solid rgba(110,231,183,0.6);
+          box-shadow:
+            0 4px 12px rgba(16,185,129,0.12),
+            inset 0 1px 0 rgba(255,255,255,0.7);
+        }
+      `}</style>
+
       <h1 style={{ fontSize: 28, fontWeight: 700, color: "#111827", marginBottom: 4 }}>
         LinkedIn Transformer
       </h1>
@@ -84,18 +184,7 @@ export default function Home() {
         <button
           onClick={transform}
           disabled={loading || !input.trim()}
-          style={{
-            background: loading || !input.trim() ? "#93c5fd" : "#2563eb",
-            color: "#fff",
-            border: "none",
-            borderRadius: 8,
-            padding: "12px 24px",
-            fontSize: 15,
-            fontWeight: 600,
-            cursor: loading || !input.trim() ? "not-allowed" : "pointer",
-            alignSelf: "flex-start",
-            transition: "background 0.15s",
-          }}
+          className="lg-btn"
         >
           {loading ? "Transforming..." : "Transform"}
         </button>
@@ -114,17 +203,7 @@ export default function Home() {
               {output && (
                 <button
                   onClick={copy}
-                  style={{
-                    background: copied ? "#d1fae5" : "#f3f4f6",
-                    color: copied ? "#065f46" : "#374151",
-                    border: "1px solid",
-                    borderColor: copied ? "#6ee7b7" : "#d1d5db",
-                    borderRadius: 6,
-                    padding: "6px 14px",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    cursor: "pointer",
-                  }}
+                  className={`lg-btn-copy ${copied ? "lg-btn-copy-copied" : "lg-btn-copy-default"}`}
                 >
                   {copied ? "Copied!" : "Copy"}
                 </button>
