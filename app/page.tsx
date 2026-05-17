@@ -48,7 +48,7 @@ export default function Home() {
       <style>{`
         .lg-btn {
           position: relative;
-          background: linear-gradient(160deg, rgba(96,165,250,0.72) 0%, rgba(37,99,235,0.62) 100%);
+          background: linear-gradient(160deg, rgba(139,92,246,0.82) 0%, rgba(109,40,217,0.75) 100%);
           backdrop-filter: blur(20px) saturate(180%);
           -webkit-backdrop-filter: blur(20px) saturate(180%);
           color: #fff;
@@ -60,7 +60,7 @@ export default function Home() {
           cursor: pointer;
           align-self: flex-start;
           box-shadow:
-            0 8px 24px rgba(37,99,235,0.22),
+            0 8px 24px rgba(109,40,217,0.28),
             inset 0 1px 0 rgba(255,255,255,0.55),
             inset 0 -1px 0 rgba(0,0,0,0.12);
           transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
@@ -77,9 +77,9 @@ export default function Home() {
           pointer-events: none;
         }
         .lg-btn:hover:not(:disabled) {
-          background: linear-gradient(160deg, rgba(96,165,250,0.88) 0%, rgba(37,99,235,0.78) 100%);
+          background: linear-gradient(160deg, rgba(139,92,246,0.95) 0%, rgba(109,40,217,0.88) 100%);
           box-shadow:
-            0 12px 32px rgba(37,99,235,0.32),
+            0 12px 32px rgba(109,40,217,0.38),
             inset 0 1px 0 rgba(255,255,255,0.65),
             inset 0 -1px 0 rgba(0,0,0,0.12);
           transform: translateY(-1px);
@@ -87,12 +87,12 @@ export default function Home() {
         .lg-btn:active:not(:disabled) {
           transform: translateY(0);
           box-shadow:
-            0 4px 12px rgba(37,99,235,0.18),
+            0 4px 12px rgba(109,40,217,0.22),
             inset 0 1px 0 rgba(255,255,255,0.4),
             inset 0 2px 5px rgba(0,0,0,0.12);
         }
         .lg-btn:disabled {
-          background: linear-gradient(160deg, rgba(147,197,253,0.5) 0%, rgba(147,197,253,0.4) 100%);
+          background: linear-gradient(160deg, rgba(196,181,253,0.5) 0%, rgba(167,139,250,0.4) 100%);
           cursor: not-allowed;
           box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
           transform: none;
